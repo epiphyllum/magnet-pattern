@@ -21,7 +21,7 @@ Overloading the `render` method the standard way
 
 #HSLIDE
 
-### Standard Scala method overloading issue #1
+#### Standard Scala method overloading issue #1
 
 ```scala
 class MyClass {
@@ -36,7 +36,7 @@ Type erasure makes both of these `render` methods the same:
 
 #HSLIDE
 
-### Standard Scala method overloading issue #2
+#### Standard Scala method overloading issue #2
 
 Sometimes it's nice to lift a method into a function but this gets tricky with overloads:
 ```scala
@@ -49,3 +49,18 @@ val f = a.render _    // <= what did I just lift?
 f(2) // this worked out
 f(3.0) // <= Compile Error!
 ```
+#HSLIDE
+
+### Magnet Pattern to the rescue!
+
+Surprisingly simple:
+```scala
+trait RenderMagnet {
+   def apply() : String 
+}
+
+class MyNewClass {
+   def render(i: RenderMagnet) : String = i() 
+}
+```
+Surely that didn't help _anything_, I want to render `Ints` and `Doubles` and they aren't `RenderMagnets`!
