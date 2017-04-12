@@ -255,7 +255,7 @@ object IngredientsMagnet {
 
 #HSLIDE
 
-### `IngredientsMagnet` knows too much
+#### `IngredientsMagnet` knows too much
 
 Fortunately we can make our `implicit defs` available in other, more logical places as well:
 ```scala
