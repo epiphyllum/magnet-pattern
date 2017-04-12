@@ -210,9 +210,8 @@ trait IngredientsMagnet {
 }
 ```
 * Same magnet pattern but `apply` returns a `Meal`
-* What's a `Meal`?
-* Our trait has a `type` field 
-* A `val` holds a value, a `def` a function, a `type` field holds a _type_
+* Our trait has a `type` field called `Meal`
+* Just lik a `val` holds a value and a `def` a function, a `type` field holds a _type_
 
 #HSLIDE
 
