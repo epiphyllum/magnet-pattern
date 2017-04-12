@@ -200,9 +200,9 @@ And we're done.  Good night and good luck
 
 #HSLIDE
 
-### Not quite. There's more to the story
+### There's more to the story
 
-What if you want to cook up different things based on your ingredients?
+What if you want to cook up different things based on available ingredients?
 ```scala
 trait IngredientsMagnet {
   type Meal
@@ -211,11 +211,11 @@ trait IngredientsMagnet {
 ```
 * Same magnet pattern but `apply` returns a `Meal`
 * Our trait has a `type` field called `Meal`
-* Just lik a `val` holds a value and a `def` a function, a `type` field holds a _type_
+* Just lik a `val` holds a value and a `def` holds a function, a `type` field holds a _type_
 
 #HSLIDE
 
-### Let's cook
+### Let's get in the kitchen
 
 Putting our `IngredientsMagnet` to work:
 ```scala
@@ -233,9 +233,11 @@ object Kitchen {
 
 #HSLIDE
 
-### Cooking with `Ints`
+### Cooking with `Rice`
 
 ```scala
+type Rice = ???
+type SteamedRice = ???
 trait IngredientsMagnet {
   type Meal
   def apply(): Meal 
