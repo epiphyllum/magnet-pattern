@@ -309,3 +309,16 @@ object RiceDishes {
 ```
 The compiler will try to find a conversion from a `Tuple` of the same types in the same order as we are passing to the function call
 
+#HSLIDE
+
+### Not so fast!
+
+* The compiler searches the companion objects of the types involved
+* Our implicit conversion is in the companion object of `RiceDishes`, not `(Rice, Fish)` or the magnet type
+* We need to bring our implicit conversions into scope
+```scala
+import RiceDishes._
+val rice : Rice = ???
+val fish : Fish = ???
+Kitchen.cook(rice, fish) // all good!
+```
