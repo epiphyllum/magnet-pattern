@@ -6,15 +6,28 @@ Enlightened by a 2012 [post](http://spray.io/blog/2012-12-13-the-magnet-pattern/
 
 #HSLIDE
 
-### Test
+### Magnet Pattern use case
 
-The `Magnet Pattern` is an alternative to Scala method overloading that overcomes some of its issues.
+The `Magnet Pattern` is an alternative to standard Scala method overloading that overcomes some of its issues.
 
-This example of Scala method overloading overloads the `render` method:
+Overloading the `render` method the standard way
 ```
    class MyClass {
       def render(i: Int) : String 
-      def render(j: Double) : String
+      def render(i: Double) : String
+   }
+
+```
+
+#HSLIDE
+
+### Standard Scala method overloading issue #1
+
+This won't compile -- due to type erasure both of these `render` methods are basically the same `def render(i: Set[_]) : String`
+```
+   class MyClass {
+      def render(i: Set[Int]) : String 
+      def render(i: Set[Double]) : String
    }
 
 ```
