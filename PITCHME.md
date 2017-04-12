@@ -296,13 +296,14 @@ We can get from `Rice` and `Fish` to a `Meal` of type `FishDish`
 * Our implicit conversion is from a tuple
 * But we're not passing a tuple here!
 ```scala
-Kitchen.cook(rice, fish)  // we're good (almost!)
+Kitchen.cook(rice, fish) 
 ```
 ```scala
 object RiceDishes {
-  implicit def fromRiceAndFish(i: (Rice, Fish)) : IngredientsMagnet = new IngredientsMagnet {
-     type Meal = FishDish
-     override def apply(): Meal = ???
+  implicit def fromRiceAndFish(i: (Rice, Fish)) : IngredientsMagnet = 
+     new IngredientsMagnet {
+       type Meal = FishDish
+       override def apply(): Meal = ???
   }
 }
 ```
