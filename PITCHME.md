@@ -110,7 +110,8 @@ And we're done.  Good night and good luck
 
 #HSLIDE
 
-Wait a minute, what the hell just happened? Rewind... 
+### Wait a minute, what the hell just happened? 
+Rewind... 
 
 ```scala
 val a = new MyNewClass()
