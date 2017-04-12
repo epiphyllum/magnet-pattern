@@ -168,5 +168,105 @@ a.render(RenderMagnet.intToMagnet(1))
 ```
 And stripping away `a.render`, we have
 ```scala
-RenderMagnet.intToMagnet(1).apply()
+RenderMagnet.intToMagnet(1).apply()   // result is the String "1"
 ```
+
+#HSLIDE
+
+### Another look at the full story
+```scala
+trait RenderMagnet {
+   def apply() : String 
+}
+
+class MyNewClass {
+   def render(i: RenderMagnet) : String = i() 
+}
+
+object RenderMagnet {
+   implicit def intToMagnet(i: Int) = new RenderMagnet {
+      override def apply() : String = i.toString 
+   }
+   implicit def doubleToMagnet(i: Double) = new RenderMagnet {
+      override def apply() : String = i.toString 
+   }
+}
+
+val a = new MyNewClass()
+a.render(1)  // basically invokes RenderMagnet.intToMagnet(1).apply() 
+a.render(3.0)
+```
+And we're done.  Good night and good luck
+
+#HSLIDE
+
+### A couple of variations on the theme
+
+What if you want to cook up different things based on your ingredients?
+```scala
+trait IngredientsMagnet {
+  type Meal
+  def apply(): Meal 
+}
+```
+* Same ol' magnet pattern but now the `apply` method returns a `Meal`
+* What's a `Meal`?
+* Our trait has a `type` field which, just like a `val` or `def`, can be defined when the `trait` is mixed in, overridden, etc
+
+#HSLIDE
+
+### Let's cook
+
+Putting our `IngredientsMagnet` to work:
+```scala
+trait IngredientsMagnet {
+  type Meal
+  def apply(): Meal 
+}
+object Kitchen {
+   def cook(i: IngredientsMagnet) : i.Meal 
+}
+```
+* `i.Meal`?
+* Again just like any field in our trait, we can refer to it as `i.Meal` but we're referring to a _type_ 
+* `Kitchen.cook` can now return a different type of `Meal` depending on what ingredients we provide
+
+#HSLIDE
+
+### Cooking with `Ints`
+
+```scala
+trait IngredientsMagnet {
+  type Meal
+  def apply(): Meal 
+}
+object Kitchen {
+   def cook(i: IngredientsMagnet) : i.Meal = i()
+}
+object IngredientsMagnet {
+   implicit def fromRice(i: Rice) : IngredientsMagnet = new IngredientsMagnet {
+      type Meal = SteamedRice 
+      override def apply(): Meal = ??? // make some SteamedRice from Rice
+   }  
+}
+```
+
+#HSLIDE
+
+### Re-organizing a bit
+
+Doesn't seem right for `IngredientsMagnet` companion object to know about every combination of ingredients and meals that will ever be.
+
+Fortunately we can make our `implicit defs` available in other, more logical places as well:
+```scala
+object Rice {
+   implicit def fromRice(i: Rice) : IngredientsMagnet = new IngredientsMagnet {
+      type Meal = SteamedRice 
+      override def apply(): Meal = ??? // make some SteamedRice from Rice
+   }  
+}
+val rice : Rice = ...   
+Kitchen.cook(rice)   // becomes Rice.fromRice(rice).apply()
+```
+* We're converting from `Rice` to `IngredientsMagnet`
+* The compiler will search the companion objects of both types involved
