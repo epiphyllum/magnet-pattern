@@ -200,7 +200,7 @@ And we're done.  Good night and good luck
 
 #HSLIDE
 
-### A couple of variations on the theme
+### Not quite. There's more to the story
 
 What if you want to cook up different things based on your ingredients?
 ```scala
@@ -209,7 +209,7 @@ trait IngredientsMagnet {
   def apply(): Meal 
 }
 ```
-* Same ol' magnet pattern but now the `apply` method returns a `Meal`
+* Same magnet pattern but `apply` returns a `Meal`
 * What's a `Meal`?
 * Our trait has a `type` field which, just like a `val` or `def`, can be defined when the `trait` is mixed in, overridden, etc
 
