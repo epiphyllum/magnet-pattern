@@ -13,8 +13,8 @@ The `Magnet Pattern` is an alternative to standard Scala method overloading that
 Overloading the `render` method the standard way
 ```
    class MyClass {
-      def render(i: Int) : String 
-      def render(i: Double) : String
+      def render(i: Int) : String = ??? 
+      def render(i: Double) : String = ???
    }
 
 ```
@@ -23,11 +23,12 @@ Overloading the `render` method the standard way
 
 ### Standard Scala method overloading issue #1
 
-This won't compile -- due to type erasure both of these `render` methods are basically the same `def render(i: Set[_]) : String`
 ```
    class MyClass {
-      def render(i: Set[Int]) : String 
-      def render(i: Set[Double]) : String
+      def render(i: Set[Int]) : String = ???
+      def render(i: Set[Double]) : String = ???
    }
 
 ```
+Type erasure makes both of these `render` methods the same: `def render(i: Set[_]) : String`
+
