@@ -110,7 +110,7 @@ And we're done.  Good night and good luck
 
 #HSLIDE
 
-### Wait a minute, what the hell just happened? 
+### What the hell just happened? 
 Rewind... 
 
 ```scala
@@ -124,7 +124,8 @@ a.render(1)
 
 #HSLIDE
 
-The compiler doesn't have to look far -- it's looking for a `RenderMagnet` and any the implicits defined in `RenderMagnet`'s companion object are automatically in scope:
+### The compiler doesn't have far to look far 
+It's looking for a `RenderMagnet` and any the implicits defined in `RenderMagnet`'s companion object are automatically in scope:
 ```scala
 
 object RenderMagnet {
