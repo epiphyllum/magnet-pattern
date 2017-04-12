@@ -112,14 +112,14 @@ And we're done.  Good night and good luck
 
 Wait a minute, what the hell just happened? Rewind... 
 
-Let's start here
-
 ```scala
 val a = new MyNewClass()
 a.render(1)   
 ```
 
-We invoke `MyNewClass.render` on an `Int` but `render` takes a `RenderMagnet` as a parameter, not an `Int` -- the compiler goes searching for a conversion from `Int` to `RenderMagnet`...
+We invoke `MyNewClass.render` on an `Int` 
+But `render` takes a `RenderMagnet` as a parameter, not an `Int`
+The compiler goes searching for a conversion from `Int` to `RenderMagnet`...
 
 #HSLIDE
 
