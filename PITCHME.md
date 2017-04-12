@@ -269,3 +269,42 @@ Kitchen.cook(rice)   // becomes Rice.fromRice(rice).apply()
 ```
 * We're converting from `Rice` to `IngredientsMagnet`
 * The compiler will search the companion objects of both types involved
+
+#HSLIDE
+
+### Boring meals
+
+What if we want to cook with more than one ingredient?
+```scala
+Kitchen.cook(rice, fish)  // uh-oh!
+```
+Not to worry:
+```scala
+object RiceDishes {
+  implicit def fromRiceAndFish(i: (Rice, Fish)) : IngredientsMagnet = new IngredientsMagnet {
+     type Meal = FishDish
+     override def apply(): Meal = ???
+  }
+}
+```
+We can get from `Rice` and `Fish` to a `Meal` of type `FishDish`
+
+#HSLIDE
+
+### Not so fast
+
+* Our implicit conversion is from a tuple
+* But we're not passing a tuple here!
+```scala
+Kitchen.cook(rice, fish)  // we're good (almost!)
+```
+```scala
+object RiceDishes {
+  implicit def fromRiceAndFish(i: (Rice, Fish)) : IngredientsMagnet = new IngredientsMagnet {
+     type Meal = FishDish
+     override def apply(): Meal = ???
+  }
+}
+```
+The compiler will try to find a conversion from a `Tuple` of the same types in the same order as we are passing to the function call
+
