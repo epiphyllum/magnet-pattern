@@ -124,8 +124,9 @@ a.render(1)
 
 #HSLIDE
 
-### The compiler doesn't have far to look far 
-It's looking for a `RenderMagnet` and any the implicits defined in `RenderMagnet`'s companion object are automatically in scope:
+### The compiler goes searching
+* Looking for a `RenderMagnet` 
+* Any implicits in `RenderMagnet`'s companion object are automatically in scope
 ```scala
 
 object RenderMagnet {
