@@ -143,11 +143,14 @@ Oh look!  we've got an implicit conversion from `Int` to `RenderMagnet`!
 
 #HSLIDE
 
-Applying the implicit conversion...
+### Applying our implicit conversion
 ```scala
 implicit def intToMagnet(i: Int) = new RenderMagnet { 
   override def apply() : String = i.toString 
 }
 ```
-we get a `RenderMagnet` for `Ints`.  It's anonymous but let's call it `M`.  `M` has exactly one method and that's `apply`
-That `apply` method has closed over the `Int` `i` passed as a parameter to the implicit conversion.  When invoked it simply calls `toString` on that `i`
+* We get a `RenderMagnet` for `Ints`.  
+* It's anonymous but let's call it `M`.  
+* `M` has exactly one method and that's `apply`
+* That `apply` method has closed over the `Int` `i` passed as a parameter to the implicit conversion.  
+* When invoked it simply calls `toString` on that `i`
