@@ -158,11 +158,15 @@ implicit def intToMagnet(i: Int) = new RenderMagnet {
 
 ### The final step
 
-We've now got a `RenderMagnet` for `Ints` in place of our original `Int`:
+Our original call passing an `Int`
 ```scala
 a.render(1)
 ```
 is now
 ```scala
 a.render(RenderMagnet.intToMagnet(1))
+```
+And stripping away `a.render`, we have
+```scala
+RenderMagnet.intToMagnet(1).apply()
 ```
