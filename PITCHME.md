@@ -322,3 +322,24 @@ val rice : Rice = ???
 val fish : Fish = ???
 Kitchen.cook(rice, fish) // all good!
 ```
+
+#HSLIDE
+
+### Summary
+
+Simple magnet:
+```scala
+trait SimpleMagnet { def apply() : String }
+```
+Cook up different return types magnet:
+```scala
+trait CookingMagnet { type Result; def apply(): Result }
+object Kitchen { def cook(c: CookingMagnet) : c.Result }
+```
+Cook up multiple ingredients:
+```scala
+object Stuff { implicit def fromABC(c: (A, B, C): CookingMagnet = ??? }
+import Stuff._
+Kitchen.cook(a, b, c)
+
+```
