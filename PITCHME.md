@@ -107,3 +107,27 @@ a.render(1)
 a.render(3.0)
 ```
 And we're done.  Good night and good luck
+
+#HSLIDE
+
+Wait a minute, what the hell just happened?
+
+```scala
+trait RenderMagnet { def apply() : String }
+class MyNewClass   { def render(i: RenderMagnet) : String = i() }
+
+object RenderMagnet {
+   implicit def intToMagnet(i: Int) = new RenderMagnet { override def apply() : String = i.toString } 
+   implicit def doubleToMagnet(i: Double) = new RenderMagnet { override def apply() : String = i.toString  }
+}
+
+val a = new MyNewClass()
+a.render(1)   
+
+```
+1. `render` takes a `RenderMagnet` as a parameter
+1. we give it an `Int` so the compiler goes looking for a conversion
+1. it doesn't have to look far because (a) it's looking for `RenderMagnet` and (b) all the implicits in its companion object are in scope by default
+1. it find `intToMagnet` and generates the `RenderMagnet` we're looking for
+1. the new `RenderMagnet` for `Ints` is passed to `render`
+1. our generic `render` method on `MyNewClass` calls `apply` on the new `RenderMagnet`
