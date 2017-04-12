@@ -307,11 +307,11 @@ object RiceDishes {
   }
 }
 ```
-The compiler will try to find a conversion from a `Tuple` of the same types in the same order as we are passing to the function call
+The compiler will try to find a conversion from a `Tuple` with the same types in the same order as we are passing
 
 #HSLIDE
 
-### Not so fast!
+### Last step!
 
 * The compiler searches the companion objects of the types involved
 * Our implicit conversion is in the companion object of `RiceDishes`, not `(Rice, Fish)` or the magnet type
