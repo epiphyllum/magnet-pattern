@@ -23,12 +23,29 @@ Overloading the `render` method the standard way
 
 ### Standard Scala method overloading issue #1
 
-```
-   class MyClass {
-      def render(i: Set[Int]) : String = ???
-      def render(i: Set[Double]) : String = ???
-   }
+```scala
+class MyClass {
+    def render(i: Set[Int]) : String = ???     // <= Compile Error!
+    def render(i: Set[Double]) : String = ???  // <= Compile Error!
+}
 
 ```
-Type erasure makes both of these `render` methods the same: `def render(i: Set[_]) : String`
 
+Type erasure makes both of these `render` methods the same: 
+```def render(i: Set[_]) : String```
+
+#HSLIDE
+
+### Standard Scala method overloading issue #2
+
+Sometimes it's nice to lift a method into a function but this gets tricky with overloads:
+```scala
+class MyClass {
+    def render(i: Int) : String = ???     
+    def render(i: Double) : String = ???  
+}
+val a = new MyClass
+val f = a.render _    // <= what did I just lift? 
+f(2) // this worked out
+f(3.0) // <= Compile Error!
+```
