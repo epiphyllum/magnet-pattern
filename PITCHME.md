@@ -127,6 +127,7 @@ a.render(1)
 ### The compiler goes searching
 * Looking for a `RenderMagnet` 
 * Any implicits in `RenderMagnet`'s companion object are automatically in scope
+
 ```scala
 
 object RenderMagnet {
