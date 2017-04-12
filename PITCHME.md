@@ -64,3 +64,46 @@ class MyNewClass {
 }
 ```
 Surely that didn't help _anything_, I want to render `Ints` and `Doubles` and they aren't `RenderMagnets`!
+
+#HSLIDE
+
+### implicits rescue the Magnet Pattern!
+
+If we've got an `Int` and we need a `RenderMagnet` implicits can get us there:
+```scala
+object RenderMagnet {
+   implicit def intToMagnet(i: Int) = new RenderMagnet {
+      override def apply() : String = i.toString 
+   }
+   implicit def doubleToMagnet(i: Double) = new RenderMagnet {
+      override def apply() : String = i.toString 
+   }
+}
+```
+
+#HSLIDE
+
+### Putting it all together
+```scala
+trait RenderMagnet {
+   def apply() : String 
+}
+
+class MyNewClass {
+   def render(i: RenderMagnet) : String = i() 
+}
+
+object RenderMagnet {
+   implicit def intToMagnet(i: Int) = new RenderMagnet {
+      override def apply() : String = i.toString 
+   }
+   implicit def doubleToMagnet(i: Double) = new RenderMagnet {
+      override def apply() : String = i.toString 
+   }
+}
+
+val a = new MyNewClass()
+a.render(1)
+a.render(3.0)
+```
+And we're done.  Good night and good luck
