@@ -150,7 +150,19 @@ implicit def intToMagnet(i: Int) = new RenderMagnet {
 }
 ```
 * We get a `RenderMagnet` for `Ints`.  
-* It's anonymous but let's call it `M`.  
-* `M` has exactly one method and that's `apply`
+* It has exactly one method and that's `apply`
 * That `apply` method has closed over the `Int` `i` passed as a parameter to the implicit conversion.  
 * When invoked it simply calls `toString` on that `i`
+
+#HSLIDE
+
+### The final step
+
+We've now got a `RenderMagnet` for `Ints` in place of our original `Int`:
+```scala
+a.render(1)
+```
+is now
+```scala
+a.render(RenderMagnet.intToMagnet(1))
+```
