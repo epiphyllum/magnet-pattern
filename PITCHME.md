@@ -255,9 +255,8 @@ object IngredientsMagnet {
 
 #HSLIDE
 
-#### `IngredientsMagnet` knows too much
+`IngredientsMagnet` knows too much. Let's move our implicit defs
 
-Fortunately we can make our `implicit defs` available in other, more logical places as well:
 ```scala
 object Rice {
    implicit def fromRice(i: Rice) : IngredientsMagnet = new IngredientsMagnet {
