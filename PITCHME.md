@@ -211,7 +211,7 @@ trait IngredientsMagnet {
 ```
 * Same magnet pattern but `apply` returns a `Meal`
 * Our trait has a `type` field called `Meal`
-* Just lik a `val` holds a value and a `def` holds a function, a `type` field holds a _type_
+* Just like a `val` holds a value and a `def` holds a method, a `type` field holds a _type_
 
 #HSLIDE
 
@@ -255,9 +255,7 @@ object IngredientsMagnet {
 
 #HSLIDE
 
-### Re-organizing a bit
-
-Doesn't seem right for `IngredientsMagnet` companion object to know about every combination of ingredients and meals that will ever be.
+### `IngredientsMagnet` knows too much
 
 Fortunately we can make our `implicit defs` available in other, more logical places as well:
 ```scala
