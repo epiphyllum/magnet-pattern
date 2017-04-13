@@ -8,14 +8,14 @@ Enlightened by a 2012 [post](http://spray.io/blog/2012-12-13-the-magnet-pattern/
 
 ### Magnet Pattern use case
 
-The `Magnet Pattern` is an alternative to standard Scala method overloading that overcomes some of its issues.
+The `Magnet Pattern` is an alternative to Scala method overloading that overcomes some of its issues.
 
 Overloading the `render` method the standard way
 ```
-   class MyClass {
-      def render(i: Int) : String = ??? 
-      def render(i: Double) : String = ???
-   }
+class MyClass {
+   def render(i: Int) : String = ??? 
+   def render(i: Double) : String = ???
+}
 
 ```
 
@@ -25,8 +25,8 @@ Overloading the `render` method the standard way
 
 ```scala
 class MyClass {
-    def render(i: Set[Int]) : String = ???     // <= Compile Error!
-    def render(i: Set[Double]) : String = ???  // <= Compile Error!
+   def render(i: Set[Int]) : String = ???     // <= Compile Error!
+   def render(i: Set[Double]) : String = ???  // <= Compile Error!
 }
 
 ```
@@ -41,8 +41,8 @@ Type erasure makes both of these `render` methods the same:
 Sometimes it's nice to lift a method into a function but this gets tricky with overloads:
 ```scala
 class MyClass {
-    def render(i: Int) : String = ???     
-    def render(i: Double) : String = ???  
+   def render(i: Int) : String = ???     
+   def render(i: Double) : String = ???  
 }
 val a = new MyClass
 val f = a.render _    // <= what did I just lift? 
@@ -237,7 +237,7 @@ object Kitchen {
 
 ```scala
 type Rice = ???
-type SteamedRice = ???
+type RiceDish = ???
 trait IngredientsMagnet {
   type Meal
   def apply(): Meal 
@@ -247,8 +247,8 @@ object Kitchen {
 }
 object IngredientsMagnet {
    implicit def fromRice(i: Rice) : IngredientsMagnet = new IngredientsMagnet {
-      type Meal = SteamedRice 
-      override def apply(): Meal = ??? // make some SteamedRice from Rice
+      type Meal = RiceDish 
+      override def apply(): Meal = ??? // make some RiceDish from Rice
    }  
 }
 ```
@@ -260,8 +260,8 @@ object IngredientsMagnet {
 ```scala
 object Rice {
    implicit def fromRice(i: Rice) : IngredientsMagnet = new IngredientsMagnet {
-      type Meal = SteamedRice 
-      override def apply(): Meal = ??? // make some SteamedRice from Rice
+      type Meal = RiceDish 
+      override def apply(): Meal = ??? // make some RiceDish from Rice
    }  
 }
 val rice : Rice = ...   
@@ -333,12 +333,12 @@ trait SimpleMagnet { def apply() : String }
 ```
 Cook up different return types magnet:
 ```scala
-trait CookingMagnet { type Result; def apply(): Result }
-object Kitchen { def cook(c: CookingMagnet) : c.Result }
+trait IngredientsMagnet { type Result; def apply(): Result }
+object Kitchen { def cook(c: IngredientsMagnet) : c.Result }
 ```
 Cook up multiple ingredients:
 ```scala
-object Stuff { implicit def fromABC(c: (A, B, C): CookingMagnet = ??? }
+object Stuff { implicit def fromABC(c: (A, B, C): IngredientsMagnet = ??? }
 import Stuff._
 Kitchen.cook(a, b, c)
 
