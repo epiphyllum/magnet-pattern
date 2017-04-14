@@ -415,7 +415,8 @@ Kitchen.cook(Fish())
 #### Type class style
 ```scala
 object Kitchen {
-   def cook[T](t: T)(implicit ev: CanCook[T]) : ev.Meal = ev.cook(t)
+   def cook[T](t: T)(implicit ev: CanCook[T]) : ev.Meal = 
+      ev.cook(t)
 }
 Kitchen.cook(Fish())
 ```
@@ -433,15 +434,12 @@ object FishOverRice {
 ```
 #### Type class style
 ```scala
-object Fish {
+object FishOverRice {
    implicit val canCookFish = new CanCook[(Fish, Rice)] {
       type Meal = FishOverRiceMeal
       def cook(f: (Fish, Rice)) : Meal = FishOverRiceMeal(f._1, f._2)
    }
 }
-```
-For both:
-```scala
 import FishOverRice._
-Kitchen.cook(Fish(), Rice()) // <= get a FishOverRiceMeal
+Kitchen.cook(Fish(), Rice())
 ```
