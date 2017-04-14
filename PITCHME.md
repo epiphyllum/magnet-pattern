@@ -353,12 +353,17 @@ Kitchen.cook(a, b, c)
 * When you lift `cook` you lift every overloaded version simultaneously
 * You can keep extending what can be cooked indefinitely outside of the original class
 
-#VSLIDE
+#HSLIDE
 
 ### Addendum -- pure Type Class approach?
 At the Scala meetup, Jacob asked what a more explicitly type-classy approach would look like
 
 This would avoid creating a new magnet instance each time a we call `render` or `cook`
+
+#HSLIDE
+### Type class approach
+Magnet approach: implicitly convert an instance of `Fish` into a `IngredientsMagnet` instance that knows how to cook _that one instance of `Fish`_
+Type class approach: implicitly provide an instance of `Cookable[Fish]` that can cook _any instance of `Fish`_  
 ```scala
 trait Cookable[T] {
   type Meal
