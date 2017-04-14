@@ -362,14 +362,30 @@ This would avoid creating a new magnet instance each time a we call `render` or 
 
 #HSLIDE
 ### Type class approach
-Magnet approach: implicitly convert an instance of `Fish` into a `IngredientsMagnet` instance that knows how to cook _that one instance of `Fish`_
-Type class approach: implicitly provide an instance of `Cookable[Fish]` that can cook _any instance of `Fish`_  
+* Magnet approach: implicitly convert an instance of `Fish` into a `IngredientsMagnet` instance that knows how to cook _that one instance of `Fish`_
+* Type class approach: implicitly provide an instance of `CanCook[Fish]` that can cook _any instance of `Fish`_  
 ```scala
-trait Cookable[T] {
+trait CanCook[T] {
   type Meal
   def cook(t: T): Meal
 }
 object Kitchen {
-  def cook[I](i: I)(implicit ev: Cookable[I]) : ev.Meal = ev.cook(i)
+  def cook[I](i: I)(implicit ev: CanCook[I]) : ev.Meal = ev.cook(i)
+}
+```
+
+#HSLIDE
+#### Magnet style
+```scala
+trait IngredientsMagnet {
+  type Meal
+  def cook() : Meal 
+}
+```
+#### Type class style
+```scala
+trait CanCook[T] {
+  type Meal
+  def cook(t: T): Meal
 }
 ```
