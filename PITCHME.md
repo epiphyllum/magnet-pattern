@@ -410,10 +410,38 @@ object Fish {
 object Kitchen {
   def cook(i: IngredientsMagnet) : i.Meal = i.cook()
 }
+Kitchen.cook(Fish())
 ```
 #### Type class style
 ```scala
 object Kitchen {
    def cook[T](t: T)(implicit ev: CanCook[T]) : ev.Meal = ev.cook(t)
 }
+Kitchen.cook(Fish())
+```
+
+#HSLIDE
+### Tuples trick works for both
+#### Magnet style
+```scala
+object FishOverRice {
+   implicit def fromFish(f: (Fish, Rice)) : IngredientsMagnet = new IngredientsMagnent {
+      type Meal = FishOverRiceMeal
+      def cook() : Meal = FishOverRiceMeal(f._1, f._2)
+   }
+}
+```
+#### Type class style
+```scala
+object Fish {
+   implicit val canCookFish = new CanCook[(Fish, Rice)] {
+      type Meal = FishOverRiceMeal
+      def cook(f: (Fish, Rice)) : Meal = FishOverRiceMeal(f._1, f._2)
+   }
+}
+```
+For both:
+```scala
+import FishOverRice._
+Kitchen.cook(Fish(), Rice()) // <= get a FishOverRiceMeal
 ```
