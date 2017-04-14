@@ -364,17 +364,9 @@ This would avoid creating a new magnet instance each time a we call `render` or 
 ### Type class approach
 * Magnet approach: implicitly convert an instance of `Fish` into a `IngredientsMagnet` instance that knows how to cook _that one instance of `Fish`_
 * Type class approach: implicitly provide an instance of `CanCook[Fish]` that can cook _any instance of `Fish`_  
-```scala
-trait CanCook[T] {
-  type Meal
-  def cook(t: T): Meal
-}
-object Kitchen {
-  def cook[I](i: I)(implicit ev: CanCook[I]) : ev.Meal = ev.cook(i)
-}
-```
 
 #HSLIDE
+### Type class vs magnet
 #### Magnet style
 ```scala
 trait IngredientsMagnet {
@@ -387,5 +379,41 @@ trait IngredientsMagnet {
 trait CanCook[T] {
   type Meal
   def cook(t: T): Meal
+}
+```
+
+#HSLIDE
+### Implementations
+#### Magnet style
+```scala
+object Fish {
+   implicit def fromFish(f: Fish) : IngredientsMagnet = new IngredientsMagnent {
+      type Meal = FishDish
+      def cook() : Meal = FishDish(f)
+   }
+}
+```
+#### Type class style
+```scala
+object Fish {
+   implicit val canCookFish = new CanCook[Fish] {
+      type Meal = FishDish
+      def cook(f: Fish) : Meal = FishDish(f)
+   }
+}
+```
+
+#HSLIDE
+### Usage
+#### Magnet style
+```scala
+object Kitchen {
+  def cook(i: IngredientsMagnet) : i.Meal = i.cook()
+}
+```
+#### Type class style
+```scala
+object Kitchen {
+   def cook[T](t: T)(implicit ev: CanCook[T]) : ev.Meal = ev.cook(t)
 }
 ```
